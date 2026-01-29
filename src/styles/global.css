@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --color-accent: #3b82f6; /* Blue 500 */
+  --color-accent-light: #60a5fa; /* Blue 400 */
+  --color-accent-dark: #2563eb; /* Blue 600 */
+}
+
+:root {
+	--accent: #3b82f6;
+	--accent-light: #60a5fa;
+	--accent-dark: #2563eb;
+	--bg-primary: #111111;
+	--text-primary: #f8fafc;
+	--text-secondary: #94a3b8;
+}
+
+@layer base {
+	body {
+		@apply bg-[#111111] text-slate-300 font-sans leading-relaxed selection:bg-blue-500/30;
+		-webkit-font-smoothing: antialiased;
+	}
+	
+	h1, h2, h3, h4, h5, h6 {
+		@apply font-bold tracking-tight text-white leading-tight;
+	}
+
+	a {
+		@apply transition-all duration-300;
+	}
+}
+
+@layer components {
+	.content-container {
+		@apply max-w-2xl mx-auto px-8;
+	}
+	
+	.glass {
+		@apply bg-black/80 backdrop-blur-xl border-b border-white/10;
+	}
+
+	.card-minimal {
+		@apply py-10 border-b border-white/10 last:border-0 hover:opacity-100 transition-all;
+	}
+
+	/* Separator lines like the image */
+	.separator {
+		@apply border-t border-blue-500/30 my-8;
+	}
+}
+
+/* Custom transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.4s;
+}

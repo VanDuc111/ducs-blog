@@ -1,0 +1,15 @@
+---
+const today = new Date();
+---
+
+<footer class="content-container py-12 border-t border-white/5 text-slate-500 text-sm">
+	<div class="flex flex-col md:flex-row justify-between items-center gap-4">
+		<div>
+			&copy; {today.getFullYear()} Duc's Blog. Built with Astro.
+		</div>
+		<div class="flex gap-6">
+			<a href="https://twitter.com/astrodotbuild" target="_blank" class="hover:text-white transition-colors">Twitter</a>
+			<a href="https://github.com/withastro/astro" target="_blank" class="hover:text-white transition-colors">GitHub</a>
+		</div>
+	</div>
+</footer>

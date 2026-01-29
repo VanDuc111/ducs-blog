@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Nội dung | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main class="content-container py-20">
+			<div class="mb-16">
+				<h1 class="text-5xl font-bold tracking-tighter mb-4 text-white">Bài viết</h1>
+				<p class="text-xl text-slate-400">Tất cả chia sẻ về kỹ thuật và phát triển bản thân.</p>
+			</div>
+			
+			<div class="h-[1px] bg-blue-500/20 mb-16"></div>
+
+			<section>
+				<div class="space-y-0">
+					{
+						posts.map((post) => (
+							<a href={`/blog/${post.id}/`} class="card-minimal block group border-white/5">
+								<div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-4">
+									<h2 class="text-2xl group-hover:text-blue-400 transition-all tracking-tight">
+										{post.data.title}
+									</h2>
+									<div class="text-sm text-slate-500 font-mono opacity-60">
+										<FormattedDate date={post.data.pubDate} />
+									</div>
+								</div>
+								<p class="text-slate-500 mt-4 line-clamp-2 max-w-xl text-base leading-relaxed">
+									{post.data.description}
+								</p>
+							</a>
+						))
+					}
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
