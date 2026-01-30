@@ -22,18 +22,22 @@ const posts = (await getCollection("blog")).sort(
   </head>
   <body>
     <Header />
-    <main class="content-container py-20">
+    <main class="content-container py-10 md:py-16">
       <Breadcrumbs items={[{ label: "Bài Viết" }]} />
-      <div class="mb-16">
-        <h1 class="text-5xl font-bold tracking-tighter mb-4 text-white">
+      <header class="mb-12">
+        <h1
+          class="text-4xl md:text-5xl font-bold tracking-tighter mb-8 text-white"
+        >
           Bài viết
         </h1>
-        <p class="text-xl text-slate-400">
-          Tất cả chia sẻ về kỹ thuật và phát triển bản thân.
+        <p
+          class="text-xl text-slate-400 leading-relaxed italic border-l-2 border-cyan-500/20 pl-6"
+        >
+          Các bài viết nằm ở đây.
         </p>
-      </div>
+      </header>
 
-      <div class="separator mb-16"></div>
+      <div class="separator mb-12"></div>
 
       <section>
         <div class="space-y-0">

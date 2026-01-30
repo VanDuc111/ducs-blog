@@ -1,0 +1,124 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`Tìm kiếm | ${SITE_TITLE}`}
+      description={SITE_DESCRIPTION}
+    />
+  </head>
+  <body>
+    <Header />
+    <main class="content-container py-10 md:py-16">
+      <Breadcrumbs items={[{ label: "Search" }]} />
+
+      <header class="mb-12">
+        <h1
+          class="text-4xl md:text-5xl font-bold tracking-tighter mb-8 text-white"
+        >
+          Search
+        </h1>
+        <p
+          class="text-xl text-slate-400 leading-relaxed italic border-l-2 border-cyan-500/20 pl-6"
+        >
+          Tìm bài viết ở đây ...
+        </p>
+      </header>
+      <div class="relative mb-16">
+        <div
+          class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
+        >
+          <svg
+            class="h-5 w-5 text-slate-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search for anything..."
+          class="block w-full bg-[#1a1a1a] border border-slate-800 rounded-xl py-4 pl-12 pr-4 text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 transition-all font-mono"
+        />
+      </div>
+
+      <div id="search-results" class="space-y-0">
+        <!-- Results will be injected here by JS -->
+      </div>
+
+      <div
+        id="no-results"
+        class="hidden text-center py-20 text-slate-500 italic"
+      >
+        Không tìm thấy bài viết nào phù hợp...
+      </div>
+    </main>
+
+    <script define:vars={{ posts }}>
+      const searchInput = document.getElementById("search-input");
+      const searchResults = document.getElementById("search-results");
+      const noResults = document.getElementById("no-results");
+
+      // Simple search logic
+      function performSearch(query) {
+        if (!query.trim()) {
+          searchResults.innerHTML = "";
+          noResults.classList.add("hidden");
+          return;
+        }
+
+        const filteredPosts = posts.filter(
+          (post) =>
+            post.data.title.toLowerCase().includes(query.toLowerCase()) ||
+            post.data.description.toLowerCase().includes(query.toLowerCase()),
+        );
+
+        if (filteredPosts.length === 0) {
+          searchResults.innerHTML = "";
+          noResults.classList.remove("hidden");
+        } else {
+          noResults.classList.add("hidden");
+          searchResults.innerHTML = filteredPosts
+            .map(
+              (post) => `
+            <a href="/blog/${post.id}/" class="card-minimal block group border-white/5">
+              <div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-4">
+                <h3 class="text-2xl group-hover:text-cyan-400 transition-all tracking-tight text-white">
+                  ${post.data.title}
+                </h3>
+              </div>
+              <p class="text-slate-500 mt-4 line-clamp-2 max-w-xl text-base leading-relaxed">
+                ${post.data.description}
+              </p>
+            </a>
+          `,
+            )
+            .join("");
+        }
+      }
+
+      searchInput.addEventListener("input", (e) => {
+        performSearch(e.target.value);
+      });
+    </script>
+
+    <Footer />
+  </body>
+</html>

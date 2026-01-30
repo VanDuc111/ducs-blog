@@ -6,7 +6,13 @@ import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 
-type Props = CollectionEntry<"blog">["data"];
+interface Props {
+  title: string;
+  description: string;
+  pubDate?: Date;
+  updatedDate?: Date;
+  heroImage?: { src: string; alt?: string };
+}
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
@@ -18,7 +24,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 
   <body>
     <Header />
-    <main class="content-container py-16 md:py-24">
+    <main class="content-container py-10 md:py-16">
       <Breadcrumbs
         items={[
           ...(Astro.url.pathname.includes("/blog")
@@ -32,16 +38,18 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
       />
       <article>
         <header class="mb-12">
-          <div class="text-sm font-mono text-cyan-400 mb-6">
-            <FormattedDate date={pubDate} />
-            {
-              updatedDate && (
-                <span class="text-slate-500 ml-2">
-                  (Cập nhật: <FormattedDate date={updatedDate} />)
-                </span>
-              )
-            }
-          </div>
+          {
+            pubDate && (
+              <div class="text-sm font-mono text-cyan-400 mb-6">
+                <FormattedDate date={pubDate} />
+                {updatedDate && (
+                  <span class="text-slate-500 ml-2">
+                    (Cập nhật: <FormattedDate date={updatedDate} />)
+                  </span>
+                )}
+              </div>
+            )
+          }
           <h1
             class="text-4xl md:text-5xl font-bold tracking-tighter mb-8 leading-tight text-white"
           >
