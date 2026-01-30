@@ -45,7 +45,7 @@
 
 	/* Separator lines like the image */
 	.separator {
-		@apply border-t border-blue-500/30 my-8;
+		@apply border-t border-dashed border-cyan-500/50 my-8 w-full block;
 	}
 }
 
