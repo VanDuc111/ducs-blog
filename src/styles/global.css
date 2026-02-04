@@ -16,9 +16,15 @@
 }
 
 @layer base {
+	html {
+		@apply overflow-y-scroll; /* Force scrollbar to always show */
+		scrollbar-gutter: stable; /* Reserve space for scrollbar */
+	}
+
 	body {
 		@apply bg-[#111111] text-slate-300 font-sans leading-relaxed selection:bg-blue-500/30;
 		-webkit-font-smoothing: antialiased;
+		overflow-x: hidden; /* Prevent horizontal scroll */
 	}
 	
 	h1, h2, h3, h4, h5, h6 {
@@ -53,4 +59,37 @@
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 0.4s;
+}
+
+/* Fix MDX layout shift */
+@layer components {
+	/* MDX wrapper elements */
+	.prose :where(div):not(:where([class~="not-prose"] *)) {
+		@apply my-0;
+	}
+
+	/* Ensure MDX content doesn't add extra spacing */
+	.prose > :first-child {
+		@apply mt-0;
+	}
+
+	.prose > :last-child {
+		@apply mb-0;
+	}
+
+	/* Fix MDX paragraph spacing */
+	.prose p {
+		@apply my-6 leading-relaxed;
+	}
+
+	/* Fix MDX heading spacing */
+	.prose h1, .prose h2, .prose h3 {
+		@apply mt-8 mb-4;
+	}
+
+	.prose h1:first-child,
+	.prose h2:first-child,
+	.prose h3:first-child {
+		@apply mt-0;
+	}
 }
