@@ -3,7 +3,7 @@ import { config, fields, collection } from '@keystatic/core';
 export default config({
   storage: {
     kind: 'github',
-    repo: 'VanDuc111/ducs-blog', // Thay bằng username/repo-name của bạn
+    repo: 'VanDuc111/ducs-blog',
   },
   
   collections: {

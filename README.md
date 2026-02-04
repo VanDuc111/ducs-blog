@@ -1,62 +1,150 @@
-# Astro Starter Kit: Blog
+# Duc's Blog
 
-```sh
-npm create astro@latest -- --template blog
+🌐 **Website:** [https://ducs-blog.pages.dev/](https://ducs-blog.pages.dev/)
+
+Blog cá nhân của Đức - nơi chia sẻ những gì tôi học được về lập trình, công nghệ, và những suy nghĩ ngẫu nhiên trong đầu.
+
+## 🛠️ Công nghệ sử dụng
+
+![Astro](https://img.shields.io/badge/Astro-FF5D01?style=for-the-badge&logo=astro&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Cloudflare](https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=Cloudflare&logoColor=white)
+
+- **Framework:** [Astro](https://astro.build) v5
+- **Styling:** Tailwind CSS v4
+- **CMS:** Keystatic (GitHub-based)
+- **Deployment:** Cloudflare Pages
+- **UI Components:** React (cho Keystatic)
+
+## 🚀 Hướng dẫn sử dụng
+
+### 1. Cài đặt dependencies
+
+```bash
+npm install
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### 2. Chạy development server
 
-Features:
-
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+```bash
+npm run dev
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Website sẽ chạy tại `http://localhost:4321`
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+### 3. Truy cập Admin Panel (Keystatic)
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+Vào `http://localhost:4321/keystatic` để quản lý bài viết qua giao diện web.
 
-Any static assets, like images, can be placed in the `public/` directory.
+**Lần đầu tiên:**
 
-## 🧞 Commands
+1. Đăng nhập bằng GitHub
+2. Authorize Keystatic app
+3. Bắt đầu viết bài!
 
-All commands are run from the root of the project, from a terminal:
+### 4. Tạo bài viết mới
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+**Cách 1: Qua Keystatic (Khuyên dùng)**
 
-## 👀 Want to learn more?
+1. Vào `/keystatic`
+2. Click "Create Blog Post"
+3. Điền thông tin và viết nội dung
+4. Click "Save" → Keystatic tự động commit lên GitHub
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+**Cách 2: Thủ công**
 
-## Credit
+1. Tạo file `.md` hoặc `.mdx` trong `src/content/blog/`
+2. Thêm frontmatter:
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+```markdown
+---
+title: "Tiêu đề bài viết"
+description: "Mô tả ngắn"
+pubDate: 2026-02-04
+heroImage: "../assets/image.jpg"
+---
+
+Nội dung bài viết...
+```
+
+### 5. Build production
+
+```bash
+npm run build
+```
+
+File build sẽ nằm trong folder `dist/`
+
+### 6. Preview build
+
+```bash
+npm run preview
+```
+
+## 🌐 Deploy lên Cloudflare Pages
+
+1. Push code lên GitHub
+2. Vào [Cloudflare Dashboard](https://dash.cloudflare.com)
+3. **Workers & Pages** → **Create application** → **Pages**
+4. Kết nối GitHub repository
+5. **Build settings:**
+   - Build command: `npm run build`
+   - Build output: `dist`
+   - Framework preset: `Astro`
+6. **Environment variables** (cho Keystatic):
+   - `KEYSTATIC_GITHUB_CLIENT_ID`
+   - `KEYSTATIC_GITHUB_CLIENT_SECRET`
+   - `KEYSTATIC_SECRET`
+7. Click **Save and Deploy**
+
+Mỗi lần push code, Cloudflare sẽ tự động build và deploy!
+
+## 📝 Các lệnh hữu ích
+
+| Lệnh                              | Mô tả                            |
+| --------------------------------- | -------------------------------- |
+| `npm install`                     | Cài đặt dependencies             |
+| `npm run dev`                     | Chạy dev server (localhost:4321) |
+| `npm run build`                   | Build production                 |
+| `npm run preview`                 | Preview bản build                |
+| `npm run astro add <integration>` | Thêm Astro integration           |
+| `npm run astro check`             | Kiểm tra lỗi TypeScript          |
+
+## 🎨 Tùy chỉnh theme
+
+### Màu sắc chính
+
+Sửa trong `src/styles/global.css`:
+
+```css
+@theme {
+  --color-accent: #3b82f6; /* Blue 500 */
+  --color-accent-light: #60a5fa; /* Blue 400 */
+  --color-accent-dark: #2563eb; /* Blue 600 */
+}
+```
+
+### Thông tin site
+
+Sửa trong `src/consts.ts`:
+
+```typescript
+export const SITE_TITLE = "Duc's Blog";
+export const SITE_DESCRIPTION = "Blog cá nhân của Đức";
+```
+
+## 📞 Liên hệ
+
+- **GitHub:** [VanDuc111](https://github.com/VanDuc111)
+- **Facebook:** [zadezla4layer](https://www.facebook.com/zadezla4layer/)
+- **Email:** ducca94tk@gmail.com
+
+## 📄 License
+
+MIT License - Tự do sử dụng và chỉnh sửa!
+
+---
+
+**Được xây dựng với ❤️ bằng Astro và Tailwind CSS**
